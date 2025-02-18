@@ -1,4 +1,4 @@
-# LHWn - Title
+# Timing Program Execution
 
 _A quick blurb or sub-title text_
 
