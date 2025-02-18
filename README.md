@@ -1,6 +1,7 @@
 # Timing Program Execution
 
-_A quick blurb or sub-title text_
+We explore runtime performance of different implementations for finding the 
+nth Fibonacci number.
 
 ## Background
 
