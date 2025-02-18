@@ -13,17 +13,42 @@
 
 #include "csc232.h"
 
-int main(int argc, char *argv[]) {
-    std::cout << "Hello, Main Target!" << std::endl;
-    // we subtract one from argc because it includes the name of the executable itself
-    std::cout << "This program was launched with " << (argc - 1) << " command line arguments." << std::endl;
-    if (argc > 1) {
-        std::cout << "The program arguments are: ";
-        // we skip argv[0] because that's the name of the executable itself
-        for (int i = 1; i < argc; ++i) {
-            std::cout << argv[i] << " ";
-        }
-        std::cout << std::endl;
+
+int main( int argc, char * argv[] )
+{
+    std::ofstream out_file;
+    out_file.open("../fib.csv");
+    out_file << "n,naive::fib(n),top_down::fib(n),bottom_up::fib(n)" << std::endl;
+    for ( auto n = 1; n <= 40; ++n)
+    {
+        naive::fib(1);
+        // Get the starting time
+        auto start = std::chrono::high_resolution_clock::now();
+        // Execute some code
+        auto result = naive::fib( n);
+        // Get the ending time
+        auto end = std::chrono::high_resolution_clock::now();
+        // Calculate the duration
+        std::chrono::duration<double> duration = end - start;
+        // Output the duration in seconds
+        out_file << n << "," << duration.count() << ",";
+
+        // collect top-down data
+        top_down::fib(1);
+        start = std::chrono::high_resolution_clock::now();
+        result = top_down::fib( n);
+        end = std::chrono::high_resolution_clock::now();
+        duration = end - start;
+        out_file << duration.count() << ",";
+
+        // collect bottom-up data
+        bottom_up::fib(1);
+        start = std::chrono::high_resolution_clock::now();
+        result = bottom_up::fib( n);
+        end = std::chrono::high_resolution_clock::now();
+        duration = end - start;
+        out_file << duration.count() << std::endl;
     }
+    out_file.close();
     return EXIT_SUCCESS;
 }
